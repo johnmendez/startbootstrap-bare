@@ -1,28 +1,3 @@
-// Button
-
-
-// Function: creates a new paragraph and append it to the bottom of the HTML body.
-
-function createButton() {
-  var para = document.createElement('button');
-  para.textContent = 'You clicked the button!';
-  document.body.appendChild(para);
-  // document.getElementById('container').innerHTML = para;
-}
-
-/*
-  1. Get references to all the buttons on the page and sort them in an array.
-  2. Loop through all the buttons and add a click event listener to each one.
-
-  When any button is pressed, the createParagraph() function will be run.
-*/
-
-var buttons = document.querySelectorAll('button');
-
-for (var i = 0; i < buttons.length ; i++) {
-  buttons[i].addEventListener('click', createButton);
-}
-
 // Guessing Number Games
 var randomNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -73,7 +48,7 @@ function setGameOver() {
   guessSubmit.disabled = true;
   resetButton = document.createElement('button');
   resetButton.textContent = 'Start new game';
-  document.body.appendChild(resetButton);
+  document.getElementById('guessingInput').appendChild(resetButton);
   resetButton.addEventListener('click', resetGame);
 }
 
@@ -97,21 +72,14 @@ function resetGame() {
   randomNumber = Math.floor(Math.random() * 100) + 1;
 }
 
-// Note: Whitespace inside elements is considered as text, and text is considered as nodes.
+//Button
 
-// I've been trying to add a new element in a div.
-// I'm guessing the way is to use and id tag.
+function createParagraph() {
+    $('#divButton').append('<div class="clickedMe">You clicked me!&nbsp;</div>');
+}
 
-// $(document).ready(function(){
-//     // JS also provide firstChild and lastChild node
-//
-//     // use appendChild
-//     var targetArea = document.getElementById('nav');
-//     var div = document.createElement('div');
-//     var snippet = document.createTextNode('this is a new DIV');
-//     div.appendChild(snippet);
-//     targetArea.appendChild(div);
-//
-//     // use the jQuery way
-//     $('#nav').append('<div>this is a new DIV</div>');
-// });
+var buttons = document.querySelectorAll('button');
+
+for (var i = 0; i < buttons.length ; i++) {
+  buttons[i].addEventListener('click', createParagraph);
+}

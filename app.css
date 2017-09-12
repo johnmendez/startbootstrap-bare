@@ -14,3 +14,15 @@ p#player {
   display: inline-block;
   cursor:pointer;
 }
+
+body {
+  background-color: gray;
+}
+
+.clickedMe {
+  display: inline-block;
+}
+
+.clickMeButton {
+  display: block;
+}
