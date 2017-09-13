@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Bare - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Css File (overrides bootstrap css) -->
+  <link rel="stylesheet" href="app.css">
+
+  <!-- Custom styles for this template -->
+  <style>
+    body {
+      padding-top: 54px;
+    }
+
+    @media (min-width: 992px) {
+      body {
+        padding-top: 56px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="brokenGussingNumberGame.html">BrokenGussingNumberGame
+              <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="mt-5">Number guessing game</h1>
+
+        <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or less. We'll tell you if your guess was too high or too low.</p>
+
+        <div class="form" id="guessingInput">
+          <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField">
+          <input type="submit" value="Submit guess" class="guessSubmit">
+        </div>
+
+        <div class="resultParas">
+          <p class="guesses"></p>
+          <p class="lastResult"></p>
+          <p class="lowOrHi"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <!-- Number Gussing Game JS -->
+  <script>
+    var randomNumber = Math.floor(Math.random()) + 1;
+
+    var guesses = document.querySelector('.guesses');
+    var lastResult = document.querySelector('.lastResult');
+    var lowOrHi = document.querySelector('.lowOrHi');
+
+    var guessSubmit = document.querySelector('.guessSubmit');
+    var guessField = document.querySelector('.guessField');
+
+    var guessCount = 1;
+    var resetButton;
+
+    function checkGuess() {
+
+      var userGuess = Number(guessField.value);
+      if (guessCount === 1) {
+        guesses.textContent = 'Previous guesses: ';
+      }
+      guesses.textContent += userGuess + ' ';
+
+      if (userGuess === randomNumber) {
+        lastResult.textContent = 'Congratulations! You got it right!';
+        lastResult.style.backgroundColor = 'green';
+        lowOrHi.textContent = '';
+        setGameOver();
+      } else if (guessCount === 10) {
+        lastResult.textContent = '!!!GAME OVER!!!';
+        setGameOver();
+      } else {
+        lastResult.textContent = 'Wrong!';
+        lastResult.style.backgroundColor = 'red';
+        if (userGuess < randomNumber) {
+          lowOrHi.textContent = 'Last guess was too low!';
+        } else if (userGuess > randomNumber) {
+          lowOrHi.textContent = 'Last guess was too high!';
+        }
+      }
+
+      guessCount++;
+      guessField.value = '';
+      guessField.focus();
+    }
+    guessSubmit.addEventListener('click', checkGuess);
+
+    function setGameOver() {
+      guessField.disabled = true;
+      guessSubmit.disabled = true;
+      resetButton = document.createElement('button');
+      resetButton.textContent = 'Start new game';
+      document.getElementById('guessingInput').appendChild(resetButton);
+      resetButton.addEventListener('click', resetGame);
+    }
+
+    function resetGame() {
+      guessCount = 1;
+
+      var resetParas = document.querySelectorAll('.resultParas p');
+      for (var i = 0; i < resetParas.length; i++) {
+        resetParas[i].textContent = '';
+      }
+      resetButton.parentNode.removeChild(resetButton);
+
+      guessField.disabled = false;
+      guessSubmit.disabled = false;
+      guessField.value = '';
+      guessField.focus();
+
+      lastResult.style.backgroundColor = 'white';
+
+      randomNumber = Math.floor(Math.random()) + 1;
+    }
+  </script>
+
+</body>
+
+</html>
